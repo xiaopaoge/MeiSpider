@@ -12,7 +12,7 @@ r = re.compile("//i.meituan.com/poi/([0-9]+)")
 
 
 class MSpider(Spider):
-    name = 'm'
+    name = 'MSpider'
     running={}
     cids = {
                10: 'KTV',

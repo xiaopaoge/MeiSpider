@@ -12,8 +12,8 @@ re_location = re.compile("marker=coord:([^;]+)")
 re_price = re.compile("人均：¥(.+)")
 
 
-class MSpider(Spider):
-    name = 'M'
+class MMSpider(Spider):
+    name = 'MMSpider'
     result = {}
     attr = {
         u'\u505c\u8f66\u4f4d': 9,
