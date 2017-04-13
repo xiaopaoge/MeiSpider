@@ -24,7 +24,7 @@ class MMSpider(Spider):
     poi_count = {}
     poi_url = 'http://i.meituan.com/poi/{0}'
     feedback_url = 'http://i.meituan.com/poi/{0}/feedbacks/page_{1}'
-    conn = psycopg2.connect("dbname=postgres user=postgres host=localhost port=5439")
+    conn = psycopg2.connect("dbname=postgres user=postgres password=123456 host=localhost port=5439")
 
     def __init__(self):
         cursor = self.conn.cursor()
