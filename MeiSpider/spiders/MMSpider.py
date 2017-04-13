@@ -34,8 +34,8 @@ class MSpider(Spider):
     def start_requests(self):
         for poi_info in self.poi_ids:
             yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)
-            #yield Request(self.feedback_url.format(poi_info[0],1), meta={'poi_info': poi_info,'page':1},
-            #              callback=self.parse_feedbacks)
+            yield Request(self.feedback_url.format(poi_info[0],1), meta={'poi_info': poi_info,'page':1},
+                          callback=self.parse_feedbacks)
 
     def parse_poi(self, response):
         item = []
