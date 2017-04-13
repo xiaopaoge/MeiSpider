@@ -247,7 +247,7 @@ class MSpider(Spider):
                20642: '数码家电',
                20457: '开锁'}
     poi_count = {}
-    conn = psycopg2.connect("dbname=postgres user=postgres host=localhost port=5439")
+    conn = psycopg2.connect("dbname=postgres user=postgres password = 123456 host=localhost port=5439")
 
     def start_requests(self):
         # yield Request('http://wh.meituan.com/',headers=header,callback=self.parse)
