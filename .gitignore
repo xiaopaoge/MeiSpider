@@ -96,3 +96,9 @@ ENV/
 .ropeproject
 
 /1.html
+/test.py
+.idea/MeiSpider.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml

@@ -31,18 +31,22 @@ class MMSpider(Spider):
         cursor = self.conn.cursor()
         cursor.execute("select * from poi.meituan_poi")
         self.poi_ids = cursor.fetchall()
+
+        cursor.execute("select count(*) from poi.meituan_pois")
+        self.k = cursor.fetchone()[0]-2
         threading._start_new_thread(self.print_status,tuple())
     def print_status(self):
         while True:
             sleep(10)
             cursor=self.conn.cursor()
             cursor.execute("select count(*) from poi.meituan_pois")
-            k=cursor.fetchall()[0]
+            k=cursor.fetchone()[0]
             cursor.execute("select count(*) from poi.meituan_comments")
-            kk=cursor.fetchall()[0]
+            kk=cursor.fetchone()[0]
             logging.info('crawl {0} poi , {1} comments'.format(k,kk))
     def start_requests(self):
-        for poi_info in self.poi_ids:
+        for i in range(self.k,self.poi_ids.__len__()):
+            poi_info=self.poi_ids[i]
             yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)
             yield Request(self.feedback_url.format(poi_info[0],1), meta={'poi_info': poi_info,'page':1},
                           callback=self.parse_feedbacks)
