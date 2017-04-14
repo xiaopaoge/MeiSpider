@@ -33,7 +33,7 @@ class MMSpider(Spider):
         self.poi_ids = cursor.fetchall()
 
         cursor.execute("select count(*) from poi.meituan_pois")
-        self.k = cursor.fetchone()[0]-2
+        self.k = cursor.fetchone()[0]-100
         threading._start_new_thread(self.print_status,tuple())
     def print_status(self):
         while True:
