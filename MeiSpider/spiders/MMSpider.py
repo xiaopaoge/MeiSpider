@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from scrapy import *
-import logging, psycopg2, re
+import logging, psycopg2, re ,threading
+from time import sleep
 
 header = {
     'Referer': 'http://wh.meituan.com/',
@@ -30,7 +31,16 @@ class MMSpider(Spider):
         cursor = self.conn.cursor()
         cursor.execute("select * from poi.meituan_poi")
         self.poi_ids = cursor.fetchall()
-
+        threading._start_new_thread(self.print_status,tuple())
+    def print_status(self):
+        while True:
+            sleep(10)
+            cursor=self.conn.cursor()
+            cursor.execute("select count(*) from poi.meituan_pois")
+            k=cursor.fetchall()[0]
+            cursor.execute("select count(*) from poi.meituan_comments")
+            kk=cursor.fetchall()[0]
+            logging.info('crawl {0} poi , {1} comments'.format(k,kk))
     def start_requests(self):
         for poi_info in self.poi_ids:
             yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)

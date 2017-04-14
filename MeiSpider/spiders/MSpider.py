@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from scrapy import *
-import logging, psycopg2, re
+import logging, psycopg2, re，threading
 
 header = {
     'Referer': 'http://wh.meituan.com/',
