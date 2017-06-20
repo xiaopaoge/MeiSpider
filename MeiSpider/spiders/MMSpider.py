@@ -45,7 +45,7 @@ class MMSpider(Spider):
             kk=cursor.fetchone()[0]
             logging.info('crawl {0} poi , {1} comments'.format(k,kk))
     def start_requests(self):
-        for i in range(self.k,self.poi_ids.__len__()):
+        for i in range(self.poi_ids.__len__()):
             poi_info=self.poi_ids[i]
             #yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)
             yield Request(self.feedback_url.format(poi_info[0],1), meta={'poi_info': poi_info,'page':1},
