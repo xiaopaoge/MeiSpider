@@ -32,8 +32,8 @@ class MMSpider(Spider):
         cursor.execute("select * from meituan_poi")
         self.poi_ids = cursor.fetchall()
 
-        cursor.execute("select count(*) from meituan_pois")
-        self.k = cursor.fetchone()[0]-100
+        #cursor.execute("select count(*) from meituan_pois")
+        #self.k = cursor.fetchone()[0]-100
         threading._start_new_thread(self.print_status,tuple())
     def print_status(self):
         while True:
@@ -47,7 +47,7 @@ class MMSpider(Spider):
     def start_requests(self):
         for i in range(self.k,self.poi_ids.__len__()):
             poi_info=self.poi_ids[i]
-            yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)
+            #yield Request(self.poi_url.format(poi_info[0]), meta={'poi_info': poi_info}, callback=self.parse_poi)
             yield Request(self.feedback_url.format(poi_info[0],1), meta={'poi_info': poi_info,'page':1},
                           callback=self.parse_feedbacks)
 
