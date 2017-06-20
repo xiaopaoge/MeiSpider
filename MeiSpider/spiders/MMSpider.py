@@ -29,19 +29,19 @@ class MMSpider(Spider):
 
     def __init__(self):
         cursor = self.conn.cursor()
-        cursor.execute("select * from poi.meituan_poi")
+        cursor.execute("select * from meituan_poi")
         self.poi_ids = cursor.fetchall()
 
-        cursor.execute("select count(*) from poi.meituan_pois")
+        cursor.execute("select count(*) from meituan_pois")
         self.k = cursor.fetchone()[0]-100
         threading._start_new_thread(self.print_status,tuple())
     def print_status(self):
         while True:
             sleep(10)
             cursor=self.conn.cursor()
-            cursor.execute("select count(*) from poi.meituan_pois")
+            cursor.execute("select count(*) from meituan_pois")
             k=cursor.fetchone()[0]
-            cursor.execute("select count(*) from poi.meituan_comments")
+            cursor.execute("select count(*) from meituan_comments")
             kk=cursor.fetchone()[0]
             logging.info('crawl {0} poi , {1} comments'.format(k,kk))
     def start_requests(self):
@@ -126,7 +126,7 @@ class MMSpider(Spider):
             if more_comment is not None:
                 comment = comment + more_comment
             reply = x.xpath(".//div[@class='block-reply']//p//text()").extract_first()
-            self.conn.cursor().execute("insert into poi.meituan_comments VALUES ({0}) on CONFLICT do nothing".format(
+            self.conn.cursor().execute("insert into meituan_comments VALUES ({0}) on CONFLICT do nothing".format(
                 ','.join(list('%s' for i in range(7)))), (poi_info[0],username,comment,score,time,pics,reply))
             self.conn.commit()
         if response.xpath("//a[@gaevent='imt/deal/feedbacklist/pageNext']").extract_first() is not None:
